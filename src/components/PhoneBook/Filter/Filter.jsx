@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import styles from './filter.module.scss';
 
-const Filter = ({ handleFilter }) => {
+const Filter = ({ handleFilter, filter }) => {
   return (
     <div className={styles.filter}>
       <label className={styles.label}>
@@ -14,6 +14,7 @@ const Filter = ({ handleFilter }) => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           placeholder="Name"
+          value={filter}
           onChange={handleFilter}
           className={styles.input}
         />
@@ -26,4 +27,5 @@ export default Filter;
 
 Filter.propTypes = {
   handleFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
 };

@@ -5,28 +5,30 @@ import { IconContext } from 'react-icons';
 import styles from './contactList.module.scss';
 
 const ContactList = ({ contacts, remuveContact }) => {
-  const contactEl = contacts.map(contact => {
-    const { id, name, number } = contact;
-    return (
-      <li key={id} className={styles.contactList}>
-        <span className={styles.contact}>
-          <IconContext.Provider value={{ style: { color: '#ff6f00' } }}>
-            <ImMobile />
-          </IconContext.Provider>
-          {name}: <span className={styles.number}>{number}</span>
-        </span>
-        <button
-          type="button"
-          className={styles.button}
-          onClick={() => remuveContact(id)}
-        >
-          Delete
-        </button>
-      </li>
-    );
-  });
-
-  return <ul className={styles.contactsList}>{contactEl}</ul>;
+  return (
+    <ul className={styles.contactsList}>
+      {contacts.map(contact => {
+        const { id, name, number } = contact;
+        return (
+          <li key={id} className={styles.contactList}>
+            <span className={styles.contact}>
+              <IconContext.Provider value={{ style: { color: '#ff6f00' } }}>
+                <ImMobile />
+              </IconContext.Provider>
+              {name}: <span className={styles.number}>{number}</span>
+            </span>
+            <button
+              type="button"
+              className={styles.button}
+              onClick={() => remuveContact(id)}
+            >
+              Delete
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
 };
 
 export default ContactList;
@@ -41,7 +43,7 @@ ContactList.propTyps = {
     PropTyps.shape({
       id: PropTyps.string.isRequired,
       name: PropTyps.string.isRequired,
-      number: PropTyps.number.isRequired,
+      number: PropTyps.string.isRequired,
     })
   ),
 };

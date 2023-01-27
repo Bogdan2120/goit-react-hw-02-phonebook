@@ -22,7 +22,6 @@ export class PhoneBook extends Component {
   addContact = ({ name, number }) => {
     if (this.isDublicate(name)) {
       Notiflix.Notify.failure(`${name} is olready in contacts`);
-      return false;
     }
 
     this.setState(prevState => {
@@ -34,7 +33,6 @@ export class PhoneBook extends Component {
 
       return { contacts: [contact, ...prevState.contacts] };
     });
-    return true;
   };
 
   isDublicate(name) {
@@ -62,7 +60,7 @@ export class PhoneBook extends Component {
     return filteredContscts;
   };
 
-  remuveContact = id => {
+  removeContact = id => {
     this.setState(({ contacts }) => {
       const newContacts = contacts.filter(contsct => contsct.id !== id);
       return { contacts: newContacts };
@@ -74,16 +72,24 @@ export class PhoneBook extends Component {
   };
 
   render() {
-    const { remuveContact, handleFilter, addContact } = this;
-    const contacts = this.getFilteredContacts();
+    const { filter } = this.state;
+    const { removeContact, handleFilter, addContact } = this;
+    const contactsFilter = this.getFilteredContacts();
+    const isContactsFilter = Boolean(contactsFilter.length);
 
     return (
       <section className={styles.sectionBook}>
         <h1 className={styles.title}>Phonebook</h1>
         <ContactForm onSubmit={addContact} />
         <h2 className={styles.titleContacts}>Contacts</h2>
-        <Filter handleFilter={handleFilter} />
-        <ContactList contacts={contacts} remuveContact={remuveContact} />
+        <Filter handleFilter={handleFilter} filter={filter} />
+        {isContactsFilter && (
+          <ContactList
+            contacts={contactsFilter}
+            remuveContact={removeContact}
+          />
+        )}
+        {!isContactsFilter && <p>There is no contacts.</p>}
       </section>
     );
   }
