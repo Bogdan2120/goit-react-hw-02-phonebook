@@ -22,6 +22,7 @@ export class PhoneBook extends Component {
   addContact = ({ name, number }) => {
     if (this.isDublicate(name)) {
       Notiflix.Notify.failure(`${name} is olready in contacts`);
+      return;
     }
 
     this.setState(prevState => {
